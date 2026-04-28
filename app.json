@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "StoryNest AI",
+    "slug": "storynest-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "storynestai",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFF8E7"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
