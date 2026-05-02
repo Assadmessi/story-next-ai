@@ -5,6 +5,7 @@ interface AppInputProps {
   placeholder?: string;
   value?: string;
   onChangeText?: (value: string) => void;
+  error?: string;
 }
 
 export function AppInput({
@@ -12,6 +13,7 @@ export function AppInput({
   placeholder,
   value,
   onChangeText,
+  error,
 }: AppInputProps) {
   return (
     <View className="mb-4">
@@ -21,8 +23,15 @@ export function AppInput({
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor="#8C9AB0"
-        className="min-h-[52px] rounded-2xl border border-black/10 bg-white px-4 text-[15px] text-brand-ink"
+        className={`min-h-[52px] rounded-2xl border bg-white px-4 text-[15px] text-brand-ink ${
+          error ? "border-brand-coral" : "border-black/10"
+        }`}
       />
+      {error ? (
+        <Text className="mt-2 text-xs font-medium text-brand-coral">
+          {error}
+        </Text>
+      ) : null}
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { BookOpen, Settings, Sparkles, Users } from "lucide-react-native";
 import { MotiView } from "moti";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import { AppButton } from "../src/components/ui/AppButton";
 import { AppCard } from "../src/components/ui/AppCard";
@@ -44,48 +44,54 @@ export default function HomeScreen() {
       </AppCard>
 
       <View className="mt-6 gap-4">
-        <AppCard>
-          <View className="flex-row items-center justify-between">
-            <View className="flex-1 pr-4">
-              <Text className="text-lg font-semibold text-brand-navy">
-                Child Profiles
-              </Text>
-              <Text className="mt-2 text-sm leading-6 text-brand-ink/70">
-                Save age, language, and favorite themes for each child.
-              </Text>
+        <Pressable onPress={() => router.push("/child-profiles")}>
+          <AppCard>
+            <View className="flex-row items-center justify-between">
+              <View className="flex-1 pr-4">
+                <Text className="text-lg font-semibold text-brand-navy">
+                  Child Profiles
+                </Text>
+                <Text className="mt-2 text-sm leading-6 text-brand-ink/70">
+                  Save age, language, and favorite themes for each child.
+                </Text>
+              </View>
+              <Users color="#1E2A38" size={22} />
             </View>
-            <Users color="#1E2A38" size={22} />
-          </View>
-        </AppCard>
+          </AppCard>
+        </Pressable>
 
-        <AppCard>
-          <View className="flex-row items-center justify-between">
-            <View className="flex-1 pr-4">
-              <Text className="text-lg font-semibold text-brand-navy">
-                Saved Stories
-              </Text>
-              <Text className="mt-2 text-sm leading-6 text-brand-ink/70">
-                Reopen finished stories and continue refining later.
-              </Text>
+        <Pressable onPress={() => router.push("/saved-stories")}>
+          <AppCard>
+            <View className="flex-row items-center justify-between">
+              <View className="flex-1 pr-4">
+                <Text className="text-lg font-semibold text-brand-navy">
+                  Saved Stories
+                </Text>
+                <Text className="mt-2 text-sm leading-6 text-brand-ink/70">
+                  Reopen finished stories and continue refining later.
+                </Text>
+              </View>
+              <BookOpen color="#1E2A38" size={22} />
             </View>
-            <BookOpen color="#1E2A38" size={22} />
-          </View>
-        </AppCard>
+          </AppCard>
+        </Pressable>
 
-        <AppCard>
-          <View className="flex-row items-center justify-between">
-            <View className="flex-1 pr-4">
-              <Text className="text-lg font-semibold text-brand-navy">
-                Settings
-              </Text>
-              <Text className="mt-2 text-sm leading-6 text-brand-ink/70">
-                Tune app behavior before cloud sync and voice arrive in later
-                phases.
-              </Text>
+        <Pressable onPress={() => router.push("/settings")}>
+          <AppCard>
+            <View className="flex-row items-center justify-between">
+              <View className="flex-1 pr-4">
+                <Text className="text-lg font-semibold text-brand-navy">
+                  Settings
+                </Text>
+                <Text className="mt-2 text-sm leading-6 text-brand-ink/70">
+                  Tune app behavior before cloud sync and voice arrive in later
+                  phases.
+                </Text>
+              </View>
+              <Settings color="#1E2A38" size={22} />
             </View>
-            <Settings color="#1E2A38" size={22} />
-          </View>
-        </AppCard>
+          </AppCard>
+        </Pressable>
       </View>
     </ScreenContainer>
   );
