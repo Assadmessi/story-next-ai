@@ -12,7 +12,13 @@ export function ScreenHeader({ title, showBack = true }: ScreenHeaderProps) {
     <View className="mb-4 flex-row items-center">
       {showBack && (
         <Pressable
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace("/home");
+            }
+          }}
           className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-white"
         >
           <ChevronLeft size={20} color="#1E2A38" />
