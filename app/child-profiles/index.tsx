@@ -6,6 +6,7 @@ import { Text, View } from "react-native";
 import { AppButton } from "../../src/components/ui/AppButton";
 import { AppCard } from "../../src/components/ui/AppCard";
 import { ScreenContainer } from "../../src/components/ui/ScreenContainer";
+import { ScreenHeader } from "../../src/components/ui/ScreenHeader";
 import { useChildProfiles } from "../../src/hooks/useChildProfiles";
 
 export default function ChildProfilesScreen() {
@@ -19,7 +20,7 @@ export default function ChildProfilesScreen() {
 
   return (
     <ScreenContainer>
-      <Text className="text-3xl font-bold text-brand-navy">Child Profiles</Text>
+      <ScreenHeader title="Child Profiles" />
       <Text className="mt-2 text-base leading-7 text-brand-ink/70">
         Save each child’s age, language, and story preferences.
       </Text>

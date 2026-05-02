@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { Text, View } from "react-native";
 import { z } from "zod";
+import { ScreenHeader } from "../../src/components/ui/ScreenHeader";
 
 import { AppButton } from "../../src/components/ui/AppButton";
 import { AppCard } from "../../src/components/ui/AppCard";
@@ -58,7 +59,7 @@ export default function CreateChildProfileScreen() {
 
   return (
     <ScreenContainer>
-      <Text className="text-3xl font-bold text-brand-navy">Create Profile</Text>
+      <ScreenHeader title="Create Profile" />
       <Text className="mt-2 text-base leading-7 text-brand-ink/70">
         This helps StoryNest shape stories for the child’s age and language.
       </Text>

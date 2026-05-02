@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { Text, View } from "react-native";
 import { z } from "zod";
+import { ScreenHeader } from "../../src/components/ui/ScreenHeader";
 
 import { AppButton } from "../../src/components/ui/AppButton";
 import { AppCard } from "../../src/components/ui/AppCard";
@@ -71,7 +72,7 @@ export default function StorySetupScreen() {
 
   return (
     <ScreenContainer>
-      <Text className="text-3xl font-bold text-brand-navy">Story Setup</Text>
+      <ScreenHeader title="Story Setup" />
       <Text className="mt-2 text-base leading-7 text-brand-ink/70">
         Pick the story direction. In Phase 2, these controls will feed the
         veteran writer engine.

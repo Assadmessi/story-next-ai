@@ -4,6 +4,7 @@ import { Text, View } from "react-native";
 import { AppButton } from "../../src/components/ui/AppButton";
 import { AppCard } from "../../src/components/ui/AppCard";
 import { ScreenContainer } from "../../src/components/ui/ScreenContainer";
+import { ScreenHeader } from "../../src/components/ui/ScreenHeader";
 
 export default function StoryBlueprintScreen() {
   const params = useLocalSearchParams<{
@@ -26,9 +27,7 @@ export default function StoryBlueprintScreen() {
 
   return (
     <ScreenContainer>
-      <Text className="text-3xl font-bold text-brand-navy">
-        Story Blueprint
-      </Text>
+      <ScreenHeader title="Story Blueprint" />
       <Text className="mt-2 text-base leading-7 text-brand-ink/70">
         Review the direction before generating the full story.
       </Text>
