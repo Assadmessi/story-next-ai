@@ -30,7 +30,7 @@ export default function IndexScreen() {
             StoryNest AI
           </Text>
           <Text className="mt-3 text-center text-base text-brand-ink/70">
-            Magical stories for children, shaped with care. hello
+            Magical stories for children, shaped with care.
           </Text>
         </MotiView>
       </View>
