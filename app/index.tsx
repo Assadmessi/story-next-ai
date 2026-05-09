@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { Text, View } from "react-native";
 import { router } from "expo-router";
 import { MotiView } from "moti";
+import { useEffect } from "react";
+import { Text, View } from "react-native";
 
 import { ScreenContainer } from "../src/components/ui/ScreenContainer";
 
@@ -26,9 +26,11 @@ export default function IndexScreen() {
           <View className="mb-5 h-24 w-24 items-center justify-center rounded-full bg-brand-blue/20">
             <Text className="text-4xl">📚</Text>
           </View>
-          <Text className="text-3xl font-bold text-brand-navy">StoryNest AI</Text>
+          <Text className="text-3xl font-bold text-brand-navy">
+            StoryNest AI
+          </Text>
           <Text className="mt-3 text-center text-base text-brand-ink/70">
-            Magical stories for children, shaped with care.
+            Magical stories for children, shaped with care. hello
           </Text>
         </MotiView>
       </View>
