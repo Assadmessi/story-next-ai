@@ -72,7 +72,10 @@ export default function StorySetupScreen() {
 
   return (
     <ScreenContainer>
-      <ScreenHeader title="Story Setup" />
+      <ScreenHeader
+        title="Story Setup"
+        subtitle="Pick the story direction. In Phase 2, these controls will feed the veteran writer engine."
+      />
       <Text className="mt-2 text-base leading-7 text-brand-ink/70">
         Pick the story direction. In Phase 2, these controls will feed the
         veteran writer engine.

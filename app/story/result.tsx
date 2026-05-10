@@ -6,6 +6,7 @@ import { Text, View } from "react-native";
 import { AppButton } from "../../src/components/ui/AppButton";
 import { AppCard } from "../../src/components/ui/AppCard";
 import { ScreenContainer } from "../../src/components/ui/ScreenContainer";
+import { ScreenHeader } from "../../src/components/ui/ScreenHeader";
 import { useStories } from "../../src/hooks/useStories";
 import type { GeneratedStory } from "../../src/types/story";
 
@@ -34,12 +35,10 @@ export default function StoryResultScreen() {
   if (!story) {
     return (
       <ScreenContainer>
-        <Text className="text-3xl font-bold text-brand-navy">
-          Story not found
-        </Text>
-        <Text className="mt-3 text-base leading-7 text-brand-ink/70">
-          Something went wrong while opening this story.
-        </Text>
+        <ScreenHeader
+          title="Story Not Found"
+          subtitle="Something went wrong while opening this story."
+        />
         <View className="mt-6">
           <AppButton label="Go Home" onPress={() => router.replace("/home")} />
         </View>
@@ -49,9 +48,7 @@ export default function StoryResultScreen() {
 
   return (
     <ScreenContainer>
-      <Text className="text-3xl font-bold leading-tight text-brand-navy">
-        {story.title}
-      </Text>
+      <ScreenHeader title={story.title} />
       <Text className="mt-2 text-base leading-7 text-brand-ink/70">
         {story.setup.length === "short" ? "Short story" : "Long story"} •{" "}
         {story.setup.language}

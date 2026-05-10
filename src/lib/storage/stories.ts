@@ -22,7 +22,18 @@ export async function saveStories(stories: GeneratedStory[]) {
 
 export async function addSavedStory(story: GeneratedStory) {
   const stories = await getSavedStories();
+  const alreadySaved = stories.some((item) => item.id === story.id);
+
+  if (alreadySaved) return stories;
+
   const nextStories = [story, ...stories];
+  await saveStories(nextStories);
+  return nextStories;
+}
+
+export async function deleteSavedStory(storyId: string) {
+  const stories = await getSavedStories();
+  const nextStories = stories.filter((story) => story.id !== storyId);
   await saveStories(nextStories);
   return nextStories;
 }

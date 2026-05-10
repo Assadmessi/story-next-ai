@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { addSavedStory, getSavedStories } from "../lib/storage/stories";
+import {
+  addSavedStory,
+  deleteSavedStory,
+  getSavedStories,
+} from "../lib/storage/stories";
 import type { GeneratedStory } from "../types/story";
 
 export function useStories() {
@@ -18,6 +22,11 @@ export function useStories() {
     setStories(nextStories);
   }, []);
 
+  const removeStory = useCallback(async (storyId: string) => {
+    const nextStories = await deleteSavedStory(storyId);
+    setStories(nextStories);
+  }, []);
+
   useEffect(() => {
     loadStories();
   }, [loadStories]);
@@ -27,5 +36,6 @@ export function useStories() {
     isLoading,
     loadStories,
     saveStory,
+    removeStory,
   };
 }

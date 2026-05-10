@@ -1,10 +1,10 @@
-import { Text } from "react-native";
 import { ScreenContainer } from "../src/components/ui/ScreenContainer";
+import { ScreenHeader } from "../src/components/ui/ScreenHeader";
 
 export default function SettingsScreen() {
   return (
     <ScreenContainer>
-      <Text className="text-2xl font-bold text-brand-navy">Settings</Text>
+      <ScreenHeader title="Settings" />
     </ScreenContainer>
   );
 }
