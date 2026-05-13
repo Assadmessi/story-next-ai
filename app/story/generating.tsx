@@ -6,8 +6,11 @@ import { Text, View } from "react-native";
 
 import { AppCard } from "../../src/components/ui/AppCard";
 import { ScreenContainer } from "../../src/components/ui/ScreenContainer";
-import { mockGenerateStory } from "../../src/lib/ai/mockGenerate";
-import type { StorySetupInput } from "../../src/types/story";
+import {
+  generateproStory,
+  proResultToGeneratedStory,
+} from "../../src/lib/ai/engine/proStoryEngine";
+import type { proStoryRequest } from "../../src/types/ai";
 
 export default function StoryGeneratingScreen() {
   const params = useLocalSearchParams<Record<string, string>>();
@@ -18,17 +21,20 @@ export default function StoryGeneratingScreen() {
     hasStarted.current = true;
 
     async function generate() {
-      const story = await mockGenerateStory({
-        ageBand: (params.ageBand ?? "6-8") as "3-5" | "6-8" | "9-12",
-        language: (params.language ?? "english") as StorySetupInput["language"],
-        length: (params.length ?? "short") as StorySetupInput["length"],
-        style: (params.style ?? "soft_cartoon") as StorySetupInput["style"],
+      const request: proStoryRequest = {
+        ageBand: (params.ageBand ?? "6-8") as proStoryRequest["ageBand"],
+        language: (params.language ?? "english") as proStoryRequest["language"],
+        length: (params.length ?? "short") as proStoryRequest["length"],
+        style: (params.style ?? "soft_cartoon") as proStoryRequest["style"],
         lesson: params.lesson ?? "Kindness",
         mainCharacterName: params.mainCharacterName ?? "Milo",
         characterType: params.characterType ?? "Curious child",
         setting: params.setting ?? "Moonlit forest",
         mood: params.mood ?? "Warm and emotional",
-      });
+      };
+
+      const proResult = await generateproStory(request);
+      const story = proResultToGeneratedStory(proResult);
 
       router.replace({
         pathname: "/story/result",
@@ -60,11 +66,11 @@ export default function StoryGeneratingScreen() {
 
         <AppCard className="w-full">
           <Text className="text-center text-2xl font-bold text-brand-navy">
-            Writing your story...
+            Building the story engine...
           </Text>
           <Text className="mt-3 text-center text-base leading-7 text-brand-ink/70">
-            StoryNest is shaping the character, lesson, scenes, and ending into
-            a child-safe story.
+            Creating blueprint, scenes, draft, safety check, and polish
+            structure.
           </Text>
         </AppCard>
       </View>
