@@ -1,4 +1,4 @@
-import type { proStoryRequest } from "../../../types/ai";
+import type { ProStoryRequest } from "../../../types/ai";
 import { getLanguageInstruction } from "../languageRules";
 import { getSafetyRulesForAge } from "../safetyRules";
 
@@ -6,7 +6,7 @@ function list(items: string[]) {
   return items.map((item) => `- ${item}`).join(" ");
 }
 
-export function buildproWriterSystemPrompt() {
+export function buildProWriterSystemPrompt() {
   return `You are a pro children's cartoon, anime, and comic story writer with 20+ years of experience.
 
 Your writing style:
@@ -27,7 +27,7 @@ You must think like a professional writers' room:
 - create image-ready scenes for future storyboard generation.`;
 }
 
-export function buildBlueprintPrompt(request: proStoryRequest) {
+export function buildBlueprintPrompt(request: ProStoryRequest) {
   const languageRules = getLanguageInstruction(request.language);
   const safetyRules = getSafetyRulesForAge(request.ageBand);
 
@@ -63,7 +63,7 @@ Return a blueprint with:
 - safety notes`;
 }
 
-export function buildScenePlanPrompt(request: proStoryRequest) {
+export function buildScenePlanPrompt(request: ProStoryRequest) {
   return `Create a scene-by-scene plan for a ${request.length} child-safe story.
 
 Rules:
@@ -78,7 +78,7 @@ Scene count:
 - long story: 6 to 8 scenes`;
 }
 
-export function buildDraftPrompt(request: proStoryRequest) {
+export function buildDraftPrompt(request: ProStoryRequest) {
   return `Write the full story from the approved blueprint and scene plan.
 
 Requirements:

@@ -10,8 +10,15 @@ export interface AIProviderGenerateOptions {
 
 export interface AIProvider {
   name: string;
+
   generateText: (
     messages: AIProviderMessage[],
     options?: AIProviderGenerateOptions,
   ) => Promise<string>;
+
+  generateJson: <T>(
+    messages: AIProviderMessage[],
+    schema: unknown,
+    options?: AIProviderGenerateOptions,
+  ) => Promise<T>;
 }

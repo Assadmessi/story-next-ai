@@ -17,7 +17,7 @@ export type StoryEngineStep =
   | "polish"
   | "final";
 
-export interface proStoryRequest {
+export interface ProStoryRequest {
   ageBand: AgeBand;
   language: StoryLanguage;
   length: StoryLength;
@@ -86,9 +86,9 @@ export interface SafetyReport {
   fixesApplied: string[];
 }
 
-export interface proStoryResult {
+export interface ProStoryResult {
   id: string;
-  request: proStoryRequest;
+  request: ProStoryRequest;
   blueprint: StoryBlueprintPlan;
   draft: StoryDraft;
   consistencyReport: ConsistencyReport;
