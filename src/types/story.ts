@@ -21,7 +21,13 @@ export interface StoryBlueprint {
   emotionalArc: string;
   moral: string;
 }
-
+export interface StorybookPage {
+  id: string;
+  pageNumber: number;
+  text: string;
+  imagePrompt: string;
+  visualMood: string;
+}
 export interface GeneratedStory {
   id: string;
   setup: StorySetupInput;
@@ -30,5 +36,6 @@ export interface GeneratedStory {
   story: string;
   scenes: string[];
   moral: string;
+  storybookPages?: StorybookPage[];
   createdAt: string;
 }

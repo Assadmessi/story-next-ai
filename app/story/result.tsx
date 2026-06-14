@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { BookOpen, Home, Save } from "lucide-react-native";
+import { BookImage, BookOpen, Home, Save } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
@@ -136,6 +136,17 @@ export default function StoryResultScreen() {
           label={saved ? "Saved" : "Save Story"}
           onPress={handleSave}
           icon={<Save color="#FFFFFF" size={18} />}
+        />
+
+        <AppButton
+          label="Open Storybook"
+          onPress={() =>
+            router.push({
+              pathname: "/story/storybook",
+              params: { storyId: story.id },
+            })
+          }
+          icon={<BookImage color="#FFFFFF" size={18} />}
         />
 
         <AppButton

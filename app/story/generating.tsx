@@ -91,58 +91,60 @@ export default function StoryGeneratingScreen() {
   const progress = Math.min(((stepIndex + 1) / loadingSteps.length) * 100, 96);
 
   return (
-    <ScreenContainer scroll={false}>
-      <View className="flex-1 items-center justify-center">
-        <MotiView
-          from={{ opacity: 0.4, scale: 0.9, rotate: "0deg" }}
-          animate={{ opacity: 1, scale: 1.08, rotate: "8deg" }}
-          transition={{
-            type: "timing",
-            duration: 900,
-            loop: true,
-            repeatReverse: true,
-          }}
-          className="mb-8 h-28 w-28 items-center justify-center rounded-full bg-brand-yellow/30"
-        >
-          <Sparkles color="#FF6B6B" size={44} />
-        </MotiView>
+    <ScreenContainer>
+      <View className="min-h-[650px] justify-center">
+        <View className="items-center">
+          <MotiView
+            from={{ opacity: 0.4, scale: 0.9, rotate: "0deg" }}
+            animate={{ opacity: 1, scale: 1.08, rotate: "8deg" }}
+            transition={{
+              type: "timing",
+              duration: 900,
+              loop: true,
+              repeatReverse: true,
+            }}
+            className="mb-8 h-28 w-28 items-center justify-center rounded-full bg-brand-yellow/30"
+          >
+            <Sparkles color="#FF6B6B" size={44} />
+          </MotiView>
 
-        <AppCard className="w-full">
-          <Text className="text-center text-2xl font-bold text-brand-navy">
-            Writing your story...
-          </Text>
+          <AppCard className="w-full">
+            <Text className="text-center text-2xl font-bold text-brand-navy">
+              Writing your story...
+            </Text>
 
-          <Text className="mt-3 text-center text-base leading-7 text-brand-ink/70">
-            {error ?? loadingSteps[stepIndex]}
-          </Text>
+            <Text className="mt-3 text-center text-base leading-7 text-brand-ink">
+              {error ?? loadingSteps[stepIndex]}
+            </Text>
 
-          {!error ? (
-            <>
-              <View className="mt-5 h-3 overflow-hidden rounded-full bg-brand-mist">
-                <View
-                  className="h-full rounded-full bg-brand-blue"
-                  style={{ width: `${progress}%` }}
+            {!error ? (
+              <>
+                <View className="mt-5 h-3 overflow-hidden rounded-full bg-brand-mist">
+                  <View
+                    className="h-full rounded-full bg-brand-blue"
+                    style={{ width: `${progress}%` }}
+                  />
+                </View>
+
+                <Text className="mt-4 text-center text-sm leading-6 text-brand-ink">
+                  Time passed: {seconds}s
+                </Text>
+
+                <Text className="mt-2 text-center text-xs leading-5 text-brand-ink">
+                  Burmese and bilingual stories can take longer because the app
+                  is planning, writing, and checking the story carefully.
+                </Text>
+              </>
+            ) : (
+              <View className="mt-5">
+                <AppButton
+                  label="Back to Setup"
+                  onPress={() => router.replace("/story/setup")}
                 />
               </View>
-
-              <Text className="mt-4 text-center text-sm leading-6 text-brand-ink/60">
-                Time passed: {seconds}s
-              </Text>
-
-              <Text className="mt-2 text-center text-xs leading-5 text-brand-ink/50">
-                Burmese and bilingual stories can take longer because the app is
-                planning, writing, and checking the story carefully.
-              </Text>
-            </>
-          ) : (
-            <View className="mt-5">
-              <AppButton
-                label="Back to Setup"
-                onPress={() => router.replace("/story/setup")}
-              />
-            </View>
-          )}
-        </AppCard>
+            )}
+          </AppCard>
+        </View>
       </View>
     </ScreenContainer>
   );

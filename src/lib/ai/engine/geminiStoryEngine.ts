@@ -9,6 +9,7 @@ import type {
   StoryScenePlan,
 } from "../../../types/ai";
 import type { GeneratedStory } from "../../../types/story";
+import { buildStorybookPages } from "../../storybook/buildStorybookPages";
 import { createId } from "../../utils/ids";
 import { getLanguageInstruction } from "../languageRules";
 import { buildProWriterSystemPrompt } from "../prompts/proWriterPrompt";
@@ -318,6 +319,24 @@ async function generateDraft(
   blueprint: StoryBlueprintPlan,
   scenes: StoryScenePlan[],
 ): Promise<StoryDraft> {
+  const variationSeed = Math.random().toString(36).slice(2, 10);
+
+  const storyTwists = [
+    "a hidden map appears",
+    "a tiny song changes the mood",
+    "the character meets a shy helper",
+    "the setting changes unexpectedly",
+    "a small mistake becomes the lesson",
+    "a magical object behaves strangely",
+    "a quiet animal guide appears",
+    "a forgotten door opens",
+    "a glowing trail leads somewhere new",
+    "the character must help someone smaller",
+  ];
+
+  const selectedTwist =
+    storyTwists[Math.floor(Math.random() * storyTwists.length)];
+
   const prompt = `Write the full children’s story.
 
 Request:
@@ -328,6 +347,15 @@ ${JSON.stringify(blueprint, null, 2)}
 
 Scenes:
 ${JSON.stringify(scenes, null, 2)}
+
+Creative variation:
+- Variation seed: ${variationSeed}
+- Unique twist for this generation: ${selectedTwist}
+- Do not reuse the same plot structure as previous generations.
+- Create a fresh conflict, fresh helper, fresh discovery, and fresh ending image.
+- Keep the lesson the same, but change how the lesson is learned.
+- Avoid always using a tiny golden light, hidden star, or same forest discovery.
+- Make this story feel newly imagined even if the input is the same.
 
 Writing rules:
 - Write ONLY the story text, not JSON.
@@ -356,7 +384,7 @@ Writing rules:
         { role: "user", content: prompt },
       ],
       {
-        temperature: 0.7,
+        temperature: 0.85,
         maxTokens:
           request.language === "bilingual"
             ? 8192
@@ -474,7 +502,7 @@ export async function generateGeminiStory(
 export function geminiResultToGeneratedStory(
   result: ProStoryResult,
 ): GeneratedStory {
-  return {
+  const story: GeneratedStory = {
     id: result.id,
     setup: {
       language: result.request.language,
@@ -497,5 +525,10 @@ export function geminiResultToGeneratedStory(
     scenes: result.sceneSummaries,
     moral: result.finalMoral,
     createdAt: result.createdAt,
+  };
+
+  return {
+    ...story,
+    storybookPages: buildStorybookPages(story),
   };
 }
