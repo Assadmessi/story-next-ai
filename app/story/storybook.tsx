@@ -1,19 +1,27 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { ChevronLeft, ChevronRight, Home } from "lucide-react-native";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Home,
+  ImageIcon,
+} from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 import { AppButton } from "../../src/components/ui/AppButton";
 import { AppCard } from "../../src/components/ui/AppCard";
 import { ScreenContainer } from "../../src/components/ui/ScreenContainer";
 import { ScreenHeader } from "../../src/components/ui/ScreenHeader";
+import { mockGenerateStoryImage } from "../../src/lib/images/mockImageGenerator";
 import { getTempStory } from "../../src/lib/storage/temStory";
-import type { GeneratedStory } from "../../src/types/story";
+import type { GeneratedStory, StorybookPage } from "../../src/types/story";
 
 export default function StorybookScreen() {
   const params = useLocalSearchParams<{ storyId?: string }>();
   const [story, setStory] = useState<GeneratedStory | null>(null);
+  const [pages, setPages] = useState<StorybookPage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [pageIndex, setPageIndex] = useState(0);
 
   useEffect(() => {
@@ -24,7 +32,9 @@ export default function StorybookScreen() {
       }
 
       const loadedStory = await getTempStory(params.storyId);
+
       setStory(loadedStory);
+      setPages(loadedStory?.storybookPages ?? []);
       setIsLoading(false);
     }
 
@@ -42,7 +52,7 @@ export default function StorybookScreen() {
     );
   }
 
-  if (!story || !story.storybookPages?.length) {
+  if (!story || pages.length === 0) {
     return (
       <ScreenContainer>
         <ScreenHeader
@@ -54,10 +64,63 @@ export default function StorybookScreen() {
     );
   }
 
-  const pages = story.storybookPages;
   const currentPage = pages[pageIndex];
-  const isFirstPage = pageIndex === 0;
   const isLastPage = pageIndex === pages.length - 1;
+
+  const handleGenerateImage = async () => {
+    if (isGeneratingImage) return;
+
+    setIsGeneratingImage(true);
+
+    setPages((oldPages) =>
+      oldPages.map((page) =>
+        page.id === currentPage.id
+          ? {
+              ...page,
+              image: {
+                pageId: page.id,
+                status: "generating",
+              },
+            }
+          : page,
+      ),
+    );
+
+    try {
+      const generatedImage = await mockGenerateStoryImage(currentPage);
+
+      setPages((oldPages) =>
+        oldPages.map((page) =>
+          page.id === currentPage.id
+            ? {
+                ...page,
+                image: generatedImage,
+              }
+            : page,
+        ),
+      );
+    } catch (error) {
+      setPages((oldPages) =>
+        oldPages.map((page) =>
+          page.id === currentPage.id
+            ? {
+                ...page,
+                image: {
+                  pageId: page.id,
+                  status: "failed",
+                  error:
+                    error instanceof Error
+                      ? error.message
+                      : "Failed to generate image.",
+                },
+              }
+            : page,
+        ),
+      );
+    } finally {
+      setIsGeneratingImage(false);
+    }
+  };
 
   return (
     <ScreenContainer>
@@ -68,13 +131,46 @@ export default function StorybookScreen() {
       </Text>
 
       <AppCard className="min-h-[260px] justify-center bg-brand-mist/70">
-        <Text className="text-center text-5xl">🎨</Text>
-        <Text className="mt-4 text-center text-base font-semibold text-brand-navy">
-          Image placeholder
-        </Text>
-        <Text className="mt-2 text-center text-sm leading-6 text-brand-ink/65">
-          Real generated image will be added in Phase 2 Part D.
-        </Text>
+        {currentPage.image?.status === "ready" && currentPage.image.imageUrl ? (
+          <Image
+            source={{ uri: currentPage.image.imageUrl }}
+            className="h-64 w-full rounded-3xl"
+            resizeMode="cover"
+          />
+        ) : (
+          <>
+            <Text className="text-center text-5xl">🎨</Text>
+
+            <Text className="mt-4 text-center text-base font-semibold text-brand-navy">
+              {currentPage.image?.status === "generating"
+                ? "Painting illustration..."
+                : currentPage.image?.status === "failed"
+                  ? "Image failed"
+                  : "Image placeholder"}
+            </Text>
+
+            <Text className="mt-2 text-center text-sm leading-6 text-brand-ink/65">
+              {currentPage.image?.status === "failed"
+                ? (currentPage.image.error ?? "Please try again.")
+                : "Generate a preview illustration for this page."}
+            </Text>
+
+            <View className="mt-5">
+              <AppButton
+                label={
+                  currentPage.image?.status === "generating" ||
+                  isGeneratingImage
+                    ? "Painting..."
+                    : currentPage.image?.status === "failed"
+                      ? "Try Again"
+                      : "Generate Image Preview"
+                }
+                onPress={handleGenerateImage}
+                icon={<ImageIcon color="#FFFFFF" size={18} />}
+              />
+            </View>
+          </>
+        )}
       </AppCard>
 
       <AppCard className="mt-4">
@@ -121,8 +217,6 @@ export default function StorybookScreen() {
           />
         </View>
       </View>
-
-      {isFirstPage ? null : null}
     </ScreenContainer>
   );
 }

@@ -27,6 +27,7 @@ export interface StorybookPage {
   text: string;
   imagePrompt: string;
   visualMood: string;
+  image?: StorybookImage;
 }
 export interface GeneratedStory {
   id: string;
@@ -38,4 +39,12 @@ export interface GeneratedStory {
   moral: string;
   storybookPages?: StorybookPage[];
   createdAt: string;
+}
+
+export interface StorybookImage {
+  pageId: string;
+  imageUrl?: string;
+  localUri?: string;
+  status: "empty" | "generating" | "ready" | "failed";
+  error?: string;
 }

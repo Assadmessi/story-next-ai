@@ -140,6 +140,10 @@ function buildNormalPages(story: GeneratedStory): StorybookPage[] {
     text,
     imagePrompt: buildImagePrompt(story, text, index + 1),
     visualMood: getVisualMood(text),
+    image: {
+      pageId: createId("image"),
+      status: "empty",
+    },
   }));
 }
 
@@ -171,6 +175,10 @@ function buildBilingualPages(story: GeneratedStory): StorybookPage[] {
         index + 1,
       ),
       visualMood: getVisualMood(`${englishText} ${burmeseText}`),
+      image: {
+        pageId: createId("image"),
+        status: "empty",
+      },
     });
   }
 
