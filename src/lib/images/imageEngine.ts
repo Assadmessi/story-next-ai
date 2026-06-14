@@ -1,17 +1,21 @@
 import type {
-    ImageGenerationRequest,
-    ImageGenerationResult,
-    ImageProvider,
+  ImageGenerationRequest,
+  ImageGenerationResult,
+  ImageProvider,
 } from "./imageProvider";
 
+import { geminiImageProvider } from "./geminiImageProvider";
 import { mockImageProvider } from "./mockImageGenerator";
 
 // ==========================
 // Configuration
 // ==========================
 
-const IMAGE_PROVIDER: ImageProvider = mockImageProvider;
+const USE_REAL_IMAGES = false;
 
+const IMAGE_PROVIDER: ImageProvider = USE_REAL_IMAGES
+  ? geminiImageProvider
+  : mockImageProvider;
 // Future:
 // import { geminiImageProvider } from "./geminiImageProvider";
 // const IMAGE_PROVIDER = geminiImageProvider;
