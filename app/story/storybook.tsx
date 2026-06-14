@@ -12,7 +12,7 @@ import { AppButton } from "../../src/components/ui/AppButton";
 import { AppCard } from "../../src/components/ui/AppCard";
 import { ScreenContainer } from "../../src/components/ui/ScreenContainer";
 import { ScreenHeader } from "../../src/components/ui/ScreenHeader";
-import { mockGenerateStoryImage } from "../../src/lib/images/mockImageGenerator";
+import { generateStoryImage } from "../../src/lib/images/imageEngine";
 import { getTempStory } from "../../src/lib/storage/temStory";
 import type { GeneratedStory, StorybookPage } from "../../src/types/story";
 
@@ -87,7 +87,16 @@ export default function StorybookScreen() {
     );
 
     try {
-      const generatedImage = await mockGenerateStoryImage(currentPage);
+      const generatedImage = await generateStoryImage({
+        page: currentPage,
+        storyTitle: story.title,
+        characterName: story.setup.mainCharacterName,
+        characterType: story.setup.characterType,
+        visualStyle: story.setup.style,
+        setting: story.setup.setting,
+        ageBand: story.setup.length,
+        language: story.setup.language,
+      });
 
       setPages((oldPages) =>
         oldPages.map((page) =>
